@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/csv"
 	"math/rand"
-	"netescape/lists"
 	"slices"
 	"strings"
+
+	"github.com/zarkones/netescape/lists"
 )
 
 func ToCsv(input *string) (output string, err error) {
