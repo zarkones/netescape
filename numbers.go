@@ -2,8 +2,13 @@ package netescape
 
 import (
 	"encoding/hex"
+	"errors"
 
 	"github.com/zarkones/netescape/lists"
+)
+
+var (
+	ErrInvalidHexChar = errors.New("invalid hex character")
 )
 
 var hexToNumbersMap = map[string][]string{
@@ -48,13 +53,21 @@ func ToNumbers(data *string) (output string, err error) {
 }
 
 func FromNumbers(input *string) (output string, err error) {
+	if len(*input) == 0 {
+		return "", nil
+	}
+
 	hexEncoded := ""
 
 	n := ""
 	for i := 0; i < len(*input); i++ {
 		n += string((*input)[i])
 		if len(n) == 2 {
-			hexEncoded += numbersToHexMap[n]
+			hN, ok := numbersToHexMap[n]
+			if !ok {
+				return "", ErrInvalidHexChar
+			}
+			hexEncoded += hN
 			n = ""
 		}
 	}
