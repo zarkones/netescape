@@ -3,3 +3,4 @@ Set of algorithms which can be used as a library to obfuscate malware communicat
 
 # FUNCTIONS
 - CSV: ToCSV, FromCSV
+- Numbers: ToNumbers, FromNumbers

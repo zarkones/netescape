@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestToCsv(t *testing.T) {
+func TestNumbers(t *testing.T) {
 	payloads := []string{
 		"",
 		" ",
@@ -17,31 +17,29 @@ func TestToCsv(t *testing.T) {
 		"drwxr-xr-x    - user 23 Jul 23:49 .git		drwxr-xr-x    - user 23 Jul \n23:34 lists.rw-r--r-- 1.9k user 23 Jul 23:41 csv.go",
 	}
 
-	// Cause there is some randomness in this CSV thingy.
 	iterations := 1000
 
 	for ri := 0; ri < iterations; ri++ {
 
 		for _, payload := range payloads {
-			csvData, err := ToCsv(&payload)
+			numbers, err := ToNumbers(&payload)
 			if err != nil {
 				t.Log(err)
 				t.FailNow()
 			}
 
-			fromCsv, err := FromCSV(&csvData)
+			plaintext, err := FromNumbers(&numbers)
 			if err != nil {
 				t.Log(err)
 				t.FailNow()
 			}
 
-			if payload != fromCsv {
-				t.Log("payload doesn't match:")
+			if plaintext != payload {
+				t.Log("plaintext and payload does not match")
+				t.Log(plaintext)
 				t.Log(payload)
-				t.Log(fromCsv)
 				t.FailNow()
 			}
 		}
-
 	}
 }
